@@ -23,5 +23,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.designsystem)
+    implementation(projects.core.resources)
+
     implementation(libs.androidx.core.ktx)
 }

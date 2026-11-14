@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_4">4dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="space_12">12dp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="space_20">20dp</dimen>
+    <dimen name="space_24">24dp</dimen>
+    <dimen name="space_32">32dp</dimen>
+    <dimen name="space_40">40dp</dimen>
+    <dimen name="space_48">48dp</dimen>
+
+    <dimen name="corner_small">10dp</dimen>
+    <dimen name="corner_medium">20dp</dimen>
+    <dimen name="corner_large">24dp</dimen>
+    <dimen name="corner_extra_large">28dp</dimen>
+
+    <dimen name="control_height">52dp</dimen>
+    <dimen name="touch_target_size">48dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_medium">20dp</dimen>
+
+    <dimen name="shadow_level_1_blur">8dp</dimen>
+    <dimen name="shadow_level_1_offset_y">2dp</dimen>
+    <dimen name="shadow_level_2_blur">20dp</dimen>
+    <dimen name="shadow_level_2_offset_y">6dp</dimen>
+    <dimen name="shadow_level_3_blur">44dp</dimen>
+    <dimen name="shadow_level_3_offset_y">16dp</dimen>
+</resources>

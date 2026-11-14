@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="form_errors">
+        <item quantity="one">Исправьте %1$d поле</item>
+        <item quantity="few">Исправьте %1$d поля</item>
+        <item quantity="many">Исправьте %1$d полей</item>
+        <item quantity="other">Исправьте %1$d поля</item>
+    </plurals>
+</resources>
