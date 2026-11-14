@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="shadow_light_level_1">#08292D28</color>
+    <color name="shadow_light_level_2">#12292D28</color>
+    <color name="shadow_light_level_3">#20292D28</color>
+    <color name="shadow_dark_level_1">#12000000</color>
+    <color name="shadow_dark_level_2">#20000000</color>
+    <color name="shadow_dark_level_3">#30000000</color>
+</resources>

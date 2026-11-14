@@ -26,4 +26,7 @@ rootProject.name = "SmartGreenhouse"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 
+include(":core:designsystem")
+include(":core:model")
+include(":core:resources")
 include(":core:testing")
