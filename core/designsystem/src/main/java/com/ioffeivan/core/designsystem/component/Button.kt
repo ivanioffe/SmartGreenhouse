@@ -2,6 +2,7 @@ package com.ioffeivan.core.designsystem.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +44,7 @@ enum class SmartGreenhouseButtonVariant {
     Tonal,
     Text,
     Danger,
+    Outlined,
 }
 
 private data class ButtonColors(
@@ -64,7 +66,9 @@ private fun SmartGreenhouseButtonVariant.colors(colors: SmartGreenhouseColors): 
             ButtonColors(container = colors.surfaceContainer, content = colors.primary)
         }
 
-        SmartGreenhouseButtonVariant.Text -> {
+        SmartGreenhouseButtonVariant.Text,
+        SmartGreenhouseButtonVariant.Outlined,
+        -> {
             ButtonColors(container = Color.Transparent, content = colors.primary)
         }
 
@@ -118,6 +122,12 @@ fun SmartGreenhouseButton(
         } else {
             dimensionResource(id = R.dimen.space_20)
         }
+    val outline =
+        if (variant == SmartGreenhouseButtonVariant.Outlined && isVisuallyEnabled) {
+            Modifier.border(width = 1.dp, color = colors.outline, shape = shape)
+        } else {
+            Modifier
+        }
 
     Box(
         modifier =
@@ -128,6 +138,7 @@ fun SmartGreenhouseButton(
                 )
                 .clip(shape = shape)
                 .background(color = buttonColor)
+                .then(other = outline)
                 .sendingSemantics(
                     sending = sending,
                     sendingDescription = sendingDescription,
@@ -174,6 +185,7 @@ private fun SmartGreenhouseButtonVariant.shape(): Shape =
     when (this) {
         SmartGreenhouseButtonVariant.Tonal,
         SmartGreenhouseButtonVariant.Text,
+        SmartGreenhouseButtonVariant.Outlined,
         -> MaterialTheme.shapes.small
 
         SmartGreenhouseButtonVariant.Primary,
@@ -256,6 +268,11 @@ private fun SmartGreenhouseButtonPreview() {
             text = "Продолжить редактирование",
             onClick = {},
             variant = SmartGreenhouseButtonVariant.Text,
+        )
+        SmartGreenhouseButton(
+            text = "Подключить устройство",
+            onClick = {},
+            variant = SmartGreenhouseButtonVariant.Outlined,
         )
         SmartGreenhouseButton(
             text = "Отвязать устройство",

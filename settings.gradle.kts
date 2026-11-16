@@ -32,3 +32,5 @@ include(":core:mvu")
 include(":core:resources")
 include(":core:testing")
 include(":core:ui")
+
+include(":feature:onboarding")
