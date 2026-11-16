@@ -28,6 +28,7 @@ include(":app")
 
 include(":core:designsystem")
 include(":core:model")
+include(":core:mvu")
 include(":core:resources")
 include(":core:testing")
 include(":core:ui")
