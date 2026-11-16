@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_title">Умный уход за растениями</string>
+    <string name="onboarding_description">Проверяйте состояние растений, настраивайте уход и управляйте поливом и светом.</string>
+    <string name="onboarding_sign_in">Войти</string>
+    <string name="onboarding_sign_up">Зарегистрироваться</string>
+</resources>
