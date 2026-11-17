@@ -12,7 +12,9 @@ import androidx.navigation.compose.rememberNavController
 import com.ioffeivan.core.designsystem.theme.SmartGreenhouseTheme
 import com.ioffeivan.feature.onboarding.presentation.navigation.OnboardingRoute
 import com.ioffeivan.feature.onboarding.presentation.navigation.onboarding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
