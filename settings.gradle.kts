@@ -28,6 +28,7 @@ include(":app")
 
 include(":core:common")
 include(":core:datastore-session")
+include(":core:datastore-app-settings")
 include(":core:designsystem")
 include(":core:model")
 include(":core:mvu")
