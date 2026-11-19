@@ -11,7 +11,7 @@ class DataStoreConventionPlugin : Plugin<Project> {
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
             dependencies {
-                "implementation"(libs.findLibrary("androidx.datastore.preferences").get())
+                "implementation"(libs.findLibrary("androidx.datastore.core").get())
                 "implementation"(libs.findLibrary("kotlinx.serialization.json").get())
 
                 "androidTestImplementation"(libs.findLibrary("kotlinx.coroutines.test").get())
