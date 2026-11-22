@@ -21,11 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIcon
+import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIconButton
 import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIcons
 import com.ioffeivan.core.designsystem.preview.ComponentPreview
 import com.ioffeivan.core.designsystem.preview.PreviewThemes
@@ -50,12 +52,13 @@ fun SmartGreenhouseSnackbar(
     modifier: Modifier = Modifier,
     tone: SnackbarTone = SnackbarTone.Info,
     action: SmartGreenhouseAction? = null,
+    onDismiss: (() -> Unit)? = null,
 ) {
     val colors = SmartGreenhouseTheme.colors
     val shape = MaterialTheme.shapes.small
     val endPadding =
         dimensionResource(
-            id = if (action == null) R.dimen.space_16 else R.dimen.space_8,
+            id = if (action == null && onDismiss == null) R.dimen.space_16 else R.dimen.space_8,
         )
     val icon =
         when (tone) {
@@ -112,6 +115,15 @@ fun SmartGreenhouseSnackbar(
                 contentColor = colors.inversePrimary,
             )
         }
+        if (onDismiss != null) {
+            SmartGreenhouseIconButton(
+                icon = SmartGreenhouseIcons.Close,
+                contentDescription = stringResource(id = R.string.cd_dismiss_message),
+                onClick = onDismiss,
+                iconSize = dimensionResource(id = R.dimen.icon_size_medium),
+                tint = colors.onInverseSurface,
+            )
+        }
     }
 }
 
@@ -141,6 +153,7 @@ fun SmartGreenhouseSnackbarHost(
             message = visuals.message,
             tone = (visuals as? SmartGreenhouseSnackbarVisuals)?.tone ?: SnackbarTone.Info,
             action = action,
+            onDismiss = if (visuals.withDismissAction) snackbar::dismiss else null,
         )
     }
 }
@@ -154,6 +167,7 @@ suspend fun SnackbarHostState.showSmartGreenhouseSnackbar(
     tone: SnackbarTone = SnackbarTone.Info,
     actionLabel: String? = null,
     duration: SnackbarDuration = if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Long,
+    withDismissAction: Boolean = false,
 ): SnackbarResult =
     showSnackbar(
         visuals =
@@ -162,6 +176,7 @@ suspend fun SnackbarHostState.showSmartGreenhouseSnackbar(
                 tone = tone,
                 actionLabel = actionLabel,
                 duration = duration,
+                withDismissAction = withDismissAction,
             ),
     )
 
@@ -170,9 +185,8 @@ private data class SmartGreenhouseSnackbarVisuals(
     val tone: SnackbarTone,
     override val actionLabel: String?,
     override val duration: SnackbarDuration,
-) : SnackbarVisuals {
-    override val withDismissAction: Boolean = false
-}
+    override val withDismissAction: Boolean,
+) : SnackbarVisuals
 
 private val SnackbarMaxWidth = 560.dp
 private const val ACTION_MAX_WIDTH_FRACTION = 0.45f
@@ -181,7 +195,7 @@ private const val ACTION_MAX_WIDTH_FRACTION = 0.45f
 @Composable
 private fun SmartGreenhouseSnackbarPreview() {
     ComponentPreview {
-        SmartGreenhouseSnackbar(message = "Настройки сохранены", tone = SnackbarTone.Success)
+        SmartGreenhouseSnackbar(message = "Настройки сохранены", tone = SnackbarTone.Success, onDismiss = {})
         SmartGreenhouseSnackbar(
             message = "Не удалось обновить данные устройства. Проверьте соединение.",
             tone = SnackbarTone.Failure,

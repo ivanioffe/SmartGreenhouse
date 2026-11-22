@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_settings_title">Настройки приложения</string>
+    <string name="app_settings_account">Аккаунт</string>
+    <string name="app_settings_username_loading">Загружаем логин…</string>
+    <string name="app_settings_username_unavailable">Логин недоступен</string>
+    <string name="app_settings_username_error">Не удалось загрузить логин</string>
+    <string name="app_settings_sign_out">Выйти из аккаунта</string>
+    <string name="app_settings_signing_out">Выходим из аккаунта</string>
+    <string name="app_settings_sign_out_error">Не удалось выйти из аккаунта. Попробуйте ещё раз.</string>
+    <string name="app_settings_theme">Тема</string>
+    <string name="app_settings_theme_system">Как в системе</string>
+    <string name="app_settings_theme_light">Светлая</string>
+    <string name="app_settings_theme_dark">Тёмная</string>
+    <string name="app_settings_theme_save_error">Не удалось сохранить тему. Попробуйте ещё раз.</string>
+    <string name="app_settings_notifications">Уведомления</string>
+    <string name="app_settings_notifications_toggle">Включить уведомления</string>
+    <string name="app_settings_notifications_supporting">Нужные уведомления можно выбрать в настройках каждого устройства.</string>
+    <string name="app_settings_notifications_description">Историю событий можно смотреть без включения уведомлений.</string>
+    <string name="app_settings_notifications_save_error">Не удалось сохранить настройку уведомлений. Попробуйте ещё раз.</string>
+    <string name="app_settings_notifications_blocked_title">Уведомления не разрешены системой</string>
+    <string name="app_settings_notifications_blocked_message">Уведомления пока выключены. Разрешите их, чтобы получать сообщения на этом телефоне.</string>
+    <string name="app_settings_open_android_settings">Открыть настройки</string>
+    <string name="app_settings_rationale_title">Уведомления о растениях</string>
+    <string name="app_settings_rationale_message">Разрешите приложению сообщать о поливе и нехватке воды. Историю событий можно смотреть без включения уведомлений.</string>
+    <string name="app_settings_continue_without_notifications">Продолжить без уведомлений</string>
+    <string name="app_settings_settings_rationale_title">Включите уведомления в настройках</string>
+    <string name="app_settings_settings_rationale_message">Разрешите уведомления для SmartGreenhouse в системных настройках приложения.</string>
+    <string name="app_settings_permission_settings_message">Разрешите уведомления для SmartGreenhouse в системных настройках приложения.</string>
+    <string name="app_settings_permission_granted_title">Уведомления включены</string>
+    <string name="app_settings_permission_granted_message">На этом телефоне разрешены уведомления о выбранных событиях.</string>
+    <string name="app_settings_permission_check_error_title">Не удалось проверить уведомления</string>
+    <string name="app_settings_permission_check_error_message">Повторите проверку или откройте системные настройки приложения вручную.</string>
+    <string name="app_settings_permission_request_error">Системное окно не открылось. Разрешите уведомления в системных настройках приложения.</string>
+    <string name="app_settings_android_settings_error">Не удалось открыть настройки. Откройте настройки телефона и выберите SmartGreenhouse.</string>
+    <string name="app_settings_load_error_title">Не удалось прочитать настройки</string>
+    <string name="app_settings_load_error_message">Попробуйте загрузить настройки этого телефона ещё раз.</string>
+    <string name="app_settings_app_version">%1$s, версия %2$s</string>
+</resources>

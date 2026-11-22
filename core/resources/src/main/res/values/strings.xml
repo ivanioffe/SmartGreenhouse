@@ -21,6 +21,7 @@
     <string name="action_edit_current">Редактировать актуальные</string>
 
     <string name="cd_navigate_back">Назад</string>
+    <string name="cd_dismiss_message">Закрыть сообщение</string>
 
     <string name="state_no_internet">Нет интернета</string>
     <string name="state_no_search_results">Ничего не найдено</string>
