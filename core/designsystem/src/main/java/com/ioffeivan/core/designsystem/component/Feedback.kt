@@ -22,12 +22,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIcon
+import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIconButton
 import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIcons
 import com.ioffeivan.core.designsystem.preview.ComponentPreview
 import com.ioffeivan.core.designsystem.preview.PreviewThemes
@@ -127,6 +129,7 @@ enum class FeedbackTone {
 /**
  * An inline message block for feedback such as a warning or a successful save.
  * It shows a [title] with an icon and colors based on [tone], plus an optional [message] and [action].
+ * Supply [onDismiss] to show a close button.
  */
 @Composable
 fun Callout(
@@ -135,6 +138,7 @@ fun Callout(
     modifier: Modifier = Modifier,
     message: String? = null,
     action: SmartGreenhouseAction? = null,
+    onDismiss: (() -> Unit)? = null,
 ) {
     CalloutLayout(
         tone = tone,
@@ -142,6 +146,7 @@ fun Callout(
         modifier = modifier,
         message = message,
         action = action,
+        onDismiss = onDismiss,
     )
 }
 
@@ -240,6 +245,7 @@ internal fun CalloutLayout(
     message: String? = null,
     action: SmartGreenhouseAction? = null,
     showIcon: Boolean = true,
+    onDismiss: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit = {},
 ) {
     val style = tone.style()
@@ -259,17 +265,17 @@ internal fun CalloutLayout(
                 )
                 .semantics { liveRegion = LiveRegionMode.Polite },
         horizontalArrangement = Arrangement.spacedBy(space = dimensionResource(id = R.dimen.space_12)),
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         if (showIcon) {
             SmartGreenhouseIcon(
                 icon = style.icon,
                 contentDescription = null,
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.space_4)),
                 size = dimensionResource(id = R.dimen.icon_size_medium),
                 tint = style.foreground,
             )
         }
+
         Column(
             modifier = Modifier.weight(weight = 1f),
             verticalArrangement = Arrangement.spacedBy(space = dimensionResource(id = R.dimen.space_4)),
@@ -279,6 +285,7 @@ internal fun CalloutLayout(
                 style = typography.label,
                 color = style.foreground,
             )
+
             if (message != null) {
                 Text(
                     text = message,
@@ -297,6 +304,16 @@ internal fun CalloutLayout(
                     contentColor = style.foreground,
                 )
             }
+        }
+
+        if (onDismiss != null) {
+            SmartGreenhouseIconButton(
+                icon = SmartGreenhouseIcons.Close,
+                contentDescription = stringResource(id = R.string.cd_dismiss_message),
+                onClick = onDismiss,
+                iconSize = dimensionResource(id = R.dimen.icon_size_medium),
+                tint = style.foreground,
+            )
         }
     }
 }
@@ -368,17 +385,19 @@ private fun StatusLabelPreview() {
 private fun CalloutPreview() {
     ComponentPreview {
         Callout(tone = FeedbackTone.Info, title = "Ожидаем ответ устройства")
-        Callout(tone = FeedbackTone.Success, title = "Настройки применены")
+        Callout(tone = FeedbackTone.Success, title = "Настройки применены", onDismiss = {})
         Callout(
             tone = FeedbackTone.Warning,
             title = "Нет интернета",
             message = "Уход по расписанию продолжится.",
+            onDismiss = {},
         )
         Callout(
             tone = FeedbackTone.Error,
             title = "Не удалось сохранить настройки",
             message = "Проверьте соединение с интернетом и повторите попытку.",
             action = SmartGreenhouseAction(label = "Повторить", onClick = {}),
+            onDismiss = {},
         )
     }
 }

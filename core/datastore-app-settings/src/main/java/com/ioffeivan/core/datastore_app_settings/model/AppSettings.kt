@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AppSettings(
     val themeMode: ThemeMode = ThemeMode.System,
+    val areNotificationsEnabled: Boolean = false,
 )

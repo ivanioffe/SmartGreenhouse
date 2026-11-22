@@ -45,6 +45,7 @@ fun ConfigurationStatus(
     applied: ConfigurationVersion? = null,
     saved: ConfigurationVersion? = null,
     action: SmartGreenhouseAction? = null,
+    onDismiss: (() -> Unit)? = null,
 ) {
     val tone =
         when (state) {
@@ -67,6 +68,7 @@ fun ConfigurationStatus(
         modifier = modifier,
         message = message,
         action = action,
+        onDismiss = onDismiss,
     ) {
         if (applied != null || saved != null) {
             Column(

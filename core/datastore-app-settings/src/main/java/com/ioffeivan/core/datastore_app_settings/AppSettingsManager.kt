@@ -14,4 +14,8 @@ class AppSettingsManager @Inject internal constructor(
     suspend fun updateThemeMode(themeMode: ThemeMode) {
         dataStore.updateData { settings -> settings.copy(themeMode = themeMode) }
     }
+
+    suspend fun setNotificationsEnabled(isEnabled: Boolean) {
+        dataStore.updateData { settings -> settings.copy(areNotificationsEnabled = isEnabled) }
+    }
 }

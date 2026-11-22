@@ -1,5 +1,7 @@
 package com.ioffeivan.core.designsystem.component
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
@@ -18,7 +21,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,12 +32,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIcon
 import com.ioffeivan.core.designsystem.component.icon.SmartGreenhouseIcons
 import com.ioffeivan.core.designsystem.preview.ComponentPreview
 import com.ioffeivan.core.designsystem.preview.PreviewThemes
 import com.ioffeivan.core.designsystem.theme.SmartGreenhouseTheme
 import com.ioffeivan.core.resources.R
+import androidx.compose.ui.graphics.lerp as lerpColor
+import androidx.compose.ui.unit.lerp as lerpDp
+
+private const val SWITCH_ANIMATION_DURATION_MILLIS = 200
 
 /**
  * A compact choice for a filter or mode. [selected] controls its appearance and [onClick] reports a tap.
@@ -71,7 +78,7 @@ fun SmartGreenhouseSelectionChip(
                     enabled = enabled,
                     role = Role.Button,
                     interactionSource = interactionSource,
-                    indication = ripple(color = contentColor),
+                    indication = null,
                     onClick = {
                         if (enabled) {
                             onClick()
@@ -124,13 +131,14 @@ fun SmartGreenhouseRadio(
                     enabled = enabled,
                     role = Role.RadioButton,
                     interactionSource = interactionSource,
-                    indication = ripple(color = colors.onSurface),
+                    indication = null,
                     onClick = {
                         if (enabled) {
                             onClick()
                         }
                     },
-                ),
+                )
+                .padding(horizontal = dimensionResource(id = R.dimen.space_8)),
         horizontalArrangement = Arrangement.spacedBy(space = dimensionResource(id = R.dimen.space_12)),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -197,7 +205,7 @@ fun SmartGreenhouseCheckbox(
                     enabled = enabled,
                     role = Role.Checkbox,
                     interactionSource = interactionSource,
-                    indication = ripple(color = colors.onSurface),
+                    indication = null,
                     onValueChange = { isChecked ->
                         if (enabled) {
                             onCheckedChange(isChecked)
@@ -251,12 +259,7 @@ fun SmartGreenhouseSwitch(
 ) {
     val colors = SmartGreenhouseTheme.colors
     val typography = SmartGreenhouseTheme.typography
-    val shape = CircleShape
     val alpha = if (enabled) 1f else DISABLED_CONTENT_OPACITY
-    val containerColor = if (checked) colors.primary else colors.outlineVariant
-    val thumbColor = if (checked) colors.onPrimary else colors.outline
-    val trackPadding = dimensionResource(id = if (checked) R.dimen.space_4 else R.dimen.space_8)
-    val thumbSize = dimensionResource(id = if (checked) R.dimen.space_24 else R.dimen.space_16)
 
     Row(
         modifier =
@@ -269,7 +272,7 @@ fun SmartGreenhouseSwitch(
                     enabled = enabled,
                     role = Role.Switch,
                     interactionSource = interactionSource,
-                    indication = ripple(color = colors.onSurface),
+                    indication = null,
                     onValueChange = { isChecked ->
                         if (enabled) {
                             onCheckedChange(isChecked)
@@ -298,30 +301,45 @@ fun SmartGreenhouseSwitch(
             }
         }
 
+        SwitchIndicator(checked = checked, enabled = enabled)
+    }
+}
+
+@Composable
+private fun SwitchIndicator(checked: Boolean, enabled: Boolean) {
+    val colors = SmartGreenhouseTheme.colors
+    val alpha = if (enabled) 1f else DISABLED_CONTENT_OPACITY
+    val progress by animateFloatAsState(
+        targetValue = if (checked) 1f else 0f,
+        animationSpec = tween(durationMillis = SWITCH_ANIMATION_DURATION_MILLIS),
+        label = "SwitchProgress",
+    )
+
+    val trackWidth = dimensionResource(id = R.dimen.control_height)
+    val uncheckedThumbSize = dimensionResource(id = R.dimen.space_16)
+    val checkedThumbSize = dimensionResource(id = R.dimen.space_24)
+    val uncheckedThumbOffset = dimensionResource(id = R.dimen.space_8)
+    val checkedThumbOffset = trackWidth - dimensionResource(id = R.dimen.space_4) - checkedThumbSize
+
+    val thumbSize = lerpDp(start = uncheckedThumbSize, stop = checkedThumbSize, fraction = progress)
+    val thumbOffset = lerpDp(start = uncheckedThumbOffset, stop = checkedThumbOffset, fraction = progress)
+    val trackColor = lerpColor(start = colors.outlineVariant, stop = colors.primary, fraction = progress)
+    val thumbColor = lerpColor(start = colors.outline, stop = colors.onPrimary, fraction = progress)
+
+    Box(
+        modifier =
+            Modifier
+                .size(width = trackWidth, height = dimensionResource(id = R.dimen.space_32))
+                .background(color = trackColor.copy(alpha = alpha), shape = CircleShape),
+        contentAlignment = Alignment.CenterStart,
+    ) {
         Box(
             modifier =
                 Modifier
-                    .size(
-                        width = dimensionResource(id = R.dimen.control_height),
-                        height = dimensionResource(id = R.dimen.space_32),
-                    )
-                    .background(
-                        color = containerColor.copy(alpha = alpha),
-                        shape = shape,
-                    )
-                    .padding(horizontal = trackPadding),
-            contentAlignment = if (checked) Alignment.CenterEnd else Alignment.CenterStart,
-        ) {
-            Box(
-                modifier =
-                    Modifier
-                        .size(size = thumbSize)
-                        .background(
-                            color = thumbColor.copy(alpha = alpha),
-                            shape = shape,
-                        ),
-            )
-        }
+                    .offset { IntOffset(x = thumbOffset.roundToPx(), y = 0) }
+                    .size(size = thumbSize)
+                    .background(color = thumbColor.copy(alpha = alpha), shape = CircleShape),
+        )
     }
 }
 
